@@ -2,6 +2,7 @@ import { HomeAssistant } from "custom-card-helpers";
 import { SubSource } from "@/type";
 import { getEntityStateWatts } from "@/states/utils/get-entity-state-watts";
 import { getEntityState } from "@/states/utils/get-entity-state";
+import { convertColorListToHex } from "@/utils/convert-color";
 
 export type BreakdownRow = {
   name: string;
@@ -25,6 +26,7 @@ const subEntityId = (sub: SubSource): string => {
 const colorToString = (color: SubSource["color"]): string | null => {
   if (!color) return null;
   if (typeof color === "string") return color;
+  if (Array.isArray(color)) return convertColorListToHex(color);
   return color.consumption || color.production || null;
 };
 

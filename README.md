@@ -299,7 +299,7 @@ On the parent (`solar` / `battery` / individual device) you can additionally set
 > Notes:
 > - If you set `entities` and leave `entity` empty, the card automatically builds the combined (summed) entity for you. Setting `entity` explicitly always wins.
 > - For multiple batteries the aggregated **state of charge** is the **average** of all configured `state_of_charge` sensors.
-> - Sub-sources are currently configured via **YAML**. The visual editor exposes the `expandable` toggle but not the nested `entities` list yet.
+> - Sub-sources can be managed in the **visual editor**: open the _Solar_ or _Battery_ subpage and use the **Additional Sources** list at the bottom; for grouped consumers, edit an _Individual_ device and use the **Additional Sources** list there. Split (consumption/production) battery sub-sources are still YAML-only.
 
 ##### Example: multiple solar sources
 

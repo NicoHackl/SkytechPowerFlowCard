@@ -6,6 +6,8 @@
     }
   },
   "editor": {
+    "sub_sources": "Additional Sources (sum up & expandable)",
+    "split_sub_source_hint": "Split entities can only be edited in YAML.",
     "entity_generator": "Генератор сутностей",
     "combined": "Об’єднана сутність (одна сутність із позитивними та негативними значеннями)",
     "separated": "Розділені сутності (окрема для споживання та окрема для виробництва)",

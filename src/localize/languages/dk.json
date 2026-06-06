@@ -6,6 +6,8 @@
     }
   },
   "editor": {
+    "sub_sources": "Additional Sources (sum up & expandable)",
+    "split_sub_source_hint": "Split entities can only be edited in YAML.",
     "entity_generator": "Generator",
     "combined": "Kombineret enhed (Én enhed med positive og negative værdier)",
     "separated": "Adskilte enheder (én enhed til forbrug og én til produktion)",

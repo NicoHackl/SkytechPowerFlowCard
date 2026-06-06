@@ -21,7 +21,7 @@ export type SubSource = {
   entity: string | ComboEntity;
   name?: string;
   icon?: string;
-  color?: string | ComboEntity;
+  color?: string | number[] | ComboEntity;
   /** Only relevant for battery sub-sources: the state of charge sensor. */
   state_of_charge?: string;
   unit_of_measurement?: string;

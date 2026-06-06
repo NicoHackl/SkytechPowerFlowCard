@@ -8,6 +8,7 @@ import localize from "../localize/localize";
 import { defaultValues } from "../utils/get-default-config";
 import { LovelaceRowConfig } from "./types/entity-rows";
 import "./components/individual-devices-editor";
+import "./components/sub-source-editor";
 import "./components/link-subpage";
 import "./components/subpage-header";
 import { loadHaForm } from "./utils/load-ha-form";
@@ -111,6 +112,7 @@ export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardE
           ? advancedOptionsSchema(localize, this._config.display_zero_lines?.mode ?? defaultValues.displayZeroLines.mode)
           : CONFIG_PAGES.find((page) => page.page === currentPage)?.schema;
       const dataForForm = currentPage === "advanced" ? data : data.entities[currentPage];
+      const supportsSubSources = currentPage === "solar" || currentPage === "battery";
 
       return html`
         <subpage-header @go-back=${this._goBack} page=${this._currentConfigPage}> </subpage-header>
@@ -121,6 +123,19 @@ export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardE
           .computeLabel=${this._computeLabelCallback}
           @value-changed=${this._valueChanged}
         ></ha-form>
+        ${supportsSubSources
+          ? html`
+              <div class="sub-source-section">
+                <div class="config-header sub-header">${localize("editor.sub_sources")}</div>
+                <sub-source-editor
+                  .hass=${this.hass}
+                  .kind=${currentPage}
+                  .subSources=${(data.entities[currentPage] as any)?.entities ?? []}
+                  @sub-entities-changed=${(ev: CustomEvent) => this._subEntitiesChanged(currentPage, ev)}
+                ></sub-source-editor>
+              </div>
+            `
+          : nothing}
       `;
     }
 
@@ -158,6 +173,24 @@ export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardE
         ${renderLinkSubPages()}
       </div>
     `;
+  }
+
+  private _subEntitiesChanged(page: "solar" | "battery", ev: CustomEvent): void {
+    if (!this._config || !this.hass) {
+      return;
+    }
+    const entities = ev.detail.entities as any[];
+    const config = {
+      ...this._config,
+      entities: {
+        ...this._config.entities,
+        [page]: {
+          ...(this._config.entities[page] as any),
+          entities,
+        },
+      },
+    };
+    fireEvent(this, "config-changed", { config });
   }
 
   private _valueChanged(ev: any): void {
@@ -214,6 +247,17 @@ export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardE
 
       .config-header.sub-header {
         margin-top: 24px;
+      }
+
+      .sub-source-section {
+        margin-top: 16px;
+        border-top: 1px solid var(--divider-color, #e0e0e0);
+        padding-top: 8px;
+      }
+
+      .sub-source-section .config-header.sub-header {
+        font-weight: 500;
+        margin-bottom: 8px;
       }
 
       ha-icon {

@@ -12,6 +12,7 @@ import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
 import { loadHaForm } from "@/ui-editor/utils/load-ha-form";
 import { individualSchema } from "@/ui-editor/schema/individual";
 import localize from "@/localize/localize";
+import "./sub-source-editor";
 
 declare global {
   interface HASSDomEvents {
@@ -87,6 +88,15 @@ export class IndividualRowEditor extends LitElement {
           .computeLabel=${this._computeLabelCallback}
           @value-changed=${this._configChanged}
         ></ha-form>
+        <div class="sub-source-section">
+          <h4>${localize("editor.sub_sources")}</h4>
+          <sub-source-editor
+            .hass=${this.hass}
+            .kind=${"individual"}
+            .subSources=${(this.entities[this._indexBeingEdited] as any).entities ?? []}
+            @sub-entities-changed=${this._subEntitiesChanged}
+          ></sub-source-editor>
+        </div>
       `;
     }
 
@@ -165,6 +175,17 @@ export class IndividualRowEditor extends LitElement {
     };
 
     fireEvent(this, "config-changed", { config });
+  }
+
+  private _subEntitiesChanged(ev: CustomEvent): void {
+    ev.stopPropagation();
+    if (this._indexBeingEdited === -1 || !this.entities) return;
+    const newEntities = this.entities.concat();
+    newEntities[this._indexBeingEdited] = {
+      ...newEntities[this._indexBeingEdited],
+      entities: ev.detail.entities,
+    };
+    fireEvent(this, "entities-changed", { entities: newEntities });
   }
 
   protected firstUpdated(): void {
@@ -330,6 +351,16 @@ export class IndividualRowEditor extends LitElement {
         .secondary {
           font-size: 12px;
           color: var(--secondary-text-color);
+        }
+
+        .sub-source-section {
+          margin-top: 16px;
+          border-top: 1px solid var(--divider-color, #e0e0e0);
+          padding-top: 8px;
+        }
+
+        .sub-source-section h4 {
+          margin: 8px 0;
         }
       `,
     ];

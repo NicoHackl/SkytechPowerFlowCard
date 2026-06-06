@@ -6,6 +6,8 @@
     }
   },
   "editor": {
+    "sub_sources": "Additional Sources (sum up & expandable)",
+    "split_sub_source_hint": "Split entities can only be edited in YAML.",
     "entity_generator": "Generátor",
     "combined": "Kombinovaná entita (jedna entita s kladnými a zápornými hodnotami)",
     "separated": "Oddelené subjekty (jeden subjekt pro spotřebu a jeden pro výrobu)",

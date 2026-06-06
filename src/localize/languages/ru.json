@@ -6,6 +6,8 @@
     }
   },
   "editor": {
+    "sub_sources": "Additional Sources (sum up & expandable)",
+    "split_sub_source_hint": "Split entities can only be edited in YAML.",
     "entity_generator": "Генератор",
     "combined": "Комбинированный объект (один объект с положительными и отрицательными значениями)",
     "separated": "Отдельные объекты (один объект для потребления и один для производства)",
