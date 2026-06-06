@@ -1,8 +1,8 @@
 import { html, nothing, svg } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { generalSecondarySpan } from "./spans/general-secondary-span";
 import { NewDur, TemplatesObj } from "@/type";
-import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { ConfigEntities, SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
 
 interface Home {
@@ -21,8 +21,8 @@ interface Home {
 }
 
 export const homeElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   {
     home,
     entities,

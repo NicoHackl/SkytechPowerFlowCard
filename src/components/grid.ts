@@ -1,13 +1,13 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { displayValue } from "@/utils/display-value";
 import { generalSecondarySpan } from "./spans/general-secondary-span";
 import { TemplatesObj } from "@/type";
-import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { ConfigEntities, SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 
 export const gridElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   { entities, grid, templatesObj }: { entities: ConfigEntities; grid: any; templatesObj: TemplatesObj }
 ) => {
   const disableEntityClick = config.clickable_entities === false;

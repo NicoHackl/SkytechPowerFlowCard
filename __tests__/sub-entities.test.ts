@@ -5,7 +5,7 @@ import { normalizeSubEntities } from "../src/utils/normalize-sub-entities";
 import { computeSubSourceRows } from "../src/utils/sub-source-breakdown";
 import { getEntityStateWatts } from "../src/states/utils/get-entity-state-watts";
 import { getBatteryStateOfCharge } from "../src/states/raw/battery";
-import type { PowerFlowCardPlusConfig } from "../src/power-flow-card-plus-config";
+import type { SkytechPowerFlowCardConfig } from "../src/skytech-power-flow-card-config";
 
 const makeHass = (states: Record<string, { state: string; unit?: string; friendly_name?: string }>): HomeAssistant =>
   ({
@@ -18,7 +18,7 @@ describe("normalizeSubEntities", () => {
   test("joins multiple solar sub-sources into a single pipe entity", () => {
     const config = {
       entities: { solar: { entities: [{ entity: "sensor.solar_east" }, { entity: "sensor.solar_west" }] } },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     const result = normalizeSubEntities(config);
     expect(result.entities.solar?.entity).toBe("sensor.solar_east | sensor.solar_west");
@@ -36,7 +36,7 @@ describe("normalizeSubEntities", () => {
           ],
         },
       },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     const result = normalizeSubEntities(config);
     expect(result.entities.battery?.entity).toBe("sensor.bat1 | sensor.bat2");
@@ -53,7 +53,7 @@ describe("normalizeSubEntities", () => {
           ],
         },
       },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     const result = normalizeSubEntities(config);
     expect(result.entities.battery?.entity).toEqual({
@@ -67,7 +67,7 @@ describe("normalizeSubEntities", () => {
       entities: {
         individual: [{ name: "Wallbox", entities: [{ entity: "sensor.wb1" }, { entity: "sensor.wb2" }] }],
       },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     const result = normalizeSubEntities(config);
     expect(result.entities.individual?.[0].entity).toBe("sensor.wb1 | sensor.wb2");
@@ -76,7 +76,7 @@ describe("normalizeSubEntities", () => {
   test("does not override an explicitly configured entity", () => {
     const config = {
       entities: { solar: { entity: "sensor.explicit", entities: [{ entity: "sensor.a" }] } },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(normalizeSubEntities(config).entities.solar?.entity).toBe("sensor.explicit");
   });
@@ -98,7 +98,7 @@ describe("getBatteryStateOfCharge with multiple batteries", () => {
       "sensor.soc1": { state: "80", unit: "%" },
       "sensor.soc2": { state: "60", unit: "%" },
     });
-    const config = { entities: { battery: { state_of_charge: "sensor.soc1 | sensor.soc2" } } } as unknown as PowerFlowCardPlusConfig;
+    const config = { entities: { battery: { state_of_charge: "sensor.soc1 | sensor.soc2" } } } as unknown as SkytechPowerFlowCardConfig;
     expect(getBatteryStateOfCharge(hass, config)).toBe(70);
   });
 });

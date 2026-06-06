@@ -1,12 +1,12 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
-import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
+import { ConfigEntities, SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { displayValue } from "@/utils/display-value";
 import { computeSubSourceRows } from "@/utils/sub-source-breakdown";
 
 export const batteryElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   {
     battery,
     entities,

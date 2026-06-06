@@ -15,7 +15,7 @@ import { nonFossilElement } from "@/components/non-fossil";
 import { expandablePopup, ExpandedGroup } from "@/components/expandable-popup";
 import { solarElement } from "@/components/solar";
 import { handleAction } from "@/ha/panels/lovelace/common/handle-action";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { getBatteryInState, getBatteryOutState, getBatteryStateOfCharge } from "@/states/raw/battery";
 import { getGridConsumptionState, getGridProductionState, getGridSecondaryState } from "@/states/raw/grid";
 import { getHomeSecondaryState } from "@/states/raw/home";
@@ -52,16 +52,16 @@ import { normalizeSubEntities } from "@/utils/normalize-sub-entities";
 const circleCircumference = 238.76104;
 
 registerCustomCard({
-  type: "power-flow-card-plus",
-  name: "Power Flow Card Plus",
+  type: "skytech-power-flow-card",
+  name: "Skytech Power Flow Card",
   description:
     "An extended version of the power flow card with richer options, advanced features and a few small UI enhancements. Inspired by the Energy Dashboard.",
 });
 
-@customElement("power-flow-card-plus")
-export class PowerFlowCardPlus extends LitElement {
+@customElement("skytech-power-flow-card")
+export class SkytechPowerFlowCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @state() private _config = {} as PowerFlowCardPlusConfig;
+  @state() private _config = {} as SkytechPowerFlowCardConfig;
 
   @state() private _templateResults: Partial<Record<string, RenderTemplateResult>> = {};
   @state() private _unsubRenderTemplates?: Map<string, Promise<UnsubscribeFunc>> = new Map();
@@ -83,7 +83,7 @@ export class PowerFlowCardPlus extends LitElement {
   @query("#solar-home-flow") solarToHomeFlow?: SVGSVGElement;
   private _renderData?:
     | {
-        entities: PowerFlowCardPlusConfig["entities"];
+        entities: SkytechPowerFlowCardConfig["entities"];
         grid: GridObject;
         solar: any;
         battery: any;
@@ -105,7 +105,7 @@ export class PowerFlowCardPlus extends LitElement {
       }
     | undefined;
 
-  setConfig(config: PowerFlowCardPlusConfig): void {
+  setConfig(config: SkytechPowerFlowCardConfig): void {
     if ((config.entities as any).individual1 || (config.entities as any).individual2) {
       throw new Error("You are using an outdated configuration. Please update your configuration to the latest version.");
     }
@@ -152,7 +152,7 @@ export class PowerFlowCardPlus extends LitElement {
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import("./ui-editor/ui-editor");
-    return document.createElement("power-flow-card-plus-editor");
+    return document.createElement("skytech-power-flow-card-editor");
   }
 
   public static getStubConfig(hass: HomeAssistant): object {
@@ -346,7 +346,7 @@ export class PowerFlowCardPlus extends LitElement {
       >
         <div
           class="card-content ${this._config.full_size ? "full-size" : ""} ${this._config.no_labels ? "no-labels" : ""}"
-          id="power-flow-card-plus"
+          id="skytech-power-flow-card"
           style=${this._config.style_card_content ? this._config.style_card_content : ""}
         >
           ${solar.has || individualObjs?.some((individual) => individual?.has) || nonFossil.hasPercentage
@@ -455,7 +455,7 @@ export class PowerFlowCardPlus extends LitElement {
       return;
     }
 
-    const elem = this.shadowRoot?.querySelector("#power-flow-card-plus") as HTMLElement | null;
+    const elem = this.shadowRoot?.querySelector("#skytech-power-flow-card") as HTMLElement | null;
     if (elem) {
       if (!this._resizeObserver) {
         this._resizeObserver = new ResizeObserver((entries) => {

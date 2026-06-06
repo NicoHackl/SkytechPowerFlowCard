@@ -1,5 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { showLine } from "@/utils/show-line";
 import { html, svg, nothing } from "lit";
 import { styleLine } from "@/utils/style-line";
@@ -7,7 +7,7 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const gridToHomeDot = (config: PowerFlowCardPlusConfig, grid: Flows["grid"], newDur: Flows["newDur"]) => {
+const gridToHomeDot = (config: SkytechPowerFlowCardConfig, grid: Flows["grid"], newDur: Flows["newDur"]) => {
   if (!checkShouldShowDots(config) || !grid.state.toHome) return nothing;
 
   return svg`<circle r="1" class="grid" vector-effect="non-scaling-stroke">
@@ -17,7 +17,7 @@ const gridToHomeDot = (config: PowerFlowCardPlusConfig, grid: Flows["grid"], new
     </circle>`;
 };
 
-export const flowGridToHome = (config: PowerFlowCardPlusConfig, { battery, grid, individual, solar, newDur }: Flows) => {
+export const flowGridToHome = (config: SkytechPowerFlowCardConfig, { battery, grid, individual, solar, newDur }: Flows) => {
   const shouldShow = grid.has && showLine(config, grid.state.fromGrid) && !config.entities.home?.hide;
   if (!shouldShow) return nothing;
 

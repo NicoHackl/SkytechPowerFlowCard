@@ -1,18 +1,18 @@
 import { HomeAssistant, formatNumber } from "custom-card-helpers";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { isNumberValue, round } from "./utils";
 
 /**
  *
  * @param hass The Home Assistant instance
- * @param config The Power Flow Card Plus configuration
+ * @param config The Skytech Power Flow Card configuration
  * @param value The value to display
  * @param options Different options to display the value
  * @returns value with unit, localized and rounded to the correct number of decimals
  */
 export const displayValue = (
   hass: HomeAssistant,
-  config: PowerFlowCardPlusConfig,
+  config: SkytechPowerFlowCardConfig,
   value: number | string | null,
   {
     unit,

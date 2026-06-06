@@ -1,4 +1,4 @@
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { SubSource } from "@/type";
 
 /**
@@ -25,7 +25,7 @@ const anySplit = (subs: SubSource[]): boolean => subs.some((s) => typeof s.entit
  * The original `entities` arrays are kept untouched so the expandable popup can
  * still list every sub-source individually.
  */
-export const normalizeSubEntities = (config: PowerFlowCardPlusConfig): PowerFlowCardPlusConfig => {
+export const normalizeSubEntities = (config: SkytechPowerFlowCardConfig): SkytechPowerFlowCardConfig => {
   if (!config?.entities) return config;
   const entities = { ...config.entities };
 

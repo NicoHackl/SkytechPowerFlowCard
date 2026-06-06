@@ -1,5 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { showLine } from "@/utils/show-line";
 import { html, svg, nothing } from "lit";
 import { styleLine } from "@/utils/style-line";
@@ -7,7 +7,7 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const batteryFromGridDot = (config: PowerFlowCardPlusConfig, grid: Flows["grid"], newDur: Flows["newDur"]) => {
+const batteryFromGridDot = (config: SkytechPowerFlowCardConfig, grid: Flows["grid"], newDur: Flows["newDur"]) => {
   if (!checkShouldShowDots(config) || !grid.state.toBattery) return nothing;
 
   return svg`<circle r="1" class="battery-from-grid" vector-effect="non-scaling-stroke">
@@ -17,7 +17,7 @@ const batteryFromGridDot = (config: PowerFlowCardPlusConfig, grid: Flows["grid"]
     </circle>`;
 };
 
-const batteryToGridDot = (config: PowerFlowCardPlusConfig, battery: Flows["battery"], newDur: Flows["newDur"]) => {
+const batteryToGridDot = (config: SkytechPowerFlowCardConfig, battery: Flows["battery"], newDur: Flows["newDur"]) => {
   if (!checkShouldShowDots(config) || !battery.state.toGrid) return nothing;
 
   return svg`
@@ -31,7 +31,7 @@ const batteryToGridDot = (config: PowerFlowCardPlusConfig, battery: Flows["batte
 
 type FlowBatteryToGridFlows = Pick<Flows, Exclude<keyof Flows, "solar">>;
 
-export const flowBatteryToGrid = (config: PowerFlowCardPlusConfig, { battery, grid, individual, newDur }: FlowBatteryToGridFlows) => {
+export const flowBatteryToGrid = (config: SkytechPowerFlowCardConfig, { battery, grid, individual, newDur }: FlowBatteryToGridFlows) => {
   const shouldShow = grid.has && battery.has && showLine(config, Math.max(grid.state.toBattery || 0, battery.state.toGrid || 0));
   if (!shouldShow) return nothing;
 

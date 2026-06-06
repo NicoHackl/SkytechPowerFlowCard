@@ -2,14 +2,14 @@ import { nothing } from "lit";
 import { baseSecondarySpan } from "./base-secondary-span";
 import { HomeAssistant } from "custom-card-helpers";
 import { displayValue } from "@/utils/display-value";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { ActionConfigSet, TemplatesObj } from "@/type";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 
 export const generalSecondarySpan = (
   hass: HomeAssistant,
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   templatesObj: TemplatesObj,
   field: {
     secondary: {

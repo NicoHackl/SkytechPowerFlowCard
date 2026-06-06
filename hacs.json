@@ -1,6 +1,6 @@
 {
-  "name": "Power Flow Card Plus",
+  "name": "Skytech Power Flow Card",
   "render_readme": true,
   "homeassistant": "2023.12.3",
-  "filename": "power-flow-card-plus.js"
+  "filename": "skytech-power-flow-card.js"
 }

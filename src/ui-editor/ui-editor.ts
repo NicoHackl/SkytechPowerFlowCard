@@ -2,7 +2,7 @@ import { LitElement, css, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { fireEvent, HomeAssistant, LovelaceCardEditor } from "custom-card-helpers";
 import { assert } from "superstruct";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { cardConfigStruct, generalConfigSchema, advancedOptionsSchema } from "./schema/_schema-all";
 import localize from "../localize/localize";
 import { defaultValues } from "../utils/get-default-config";
@@ -60,14 +60,14 @@ const CONFIG_PAGES: {
   },
 ];
 
-@customElement("power-flow-card-plus-editor")
-export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardEditor {
+@customElement("skytech-power-flow-card-editor")
+export class SkytechPowerFlowCardEditor extends LitElement implements LovelaceCardEditor {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @state() private _config?: PowerFlowCardPlusConfig;
+  @state() private _config?: SkytechPowerFlowCardConfig;
   @state() private _configEntities?: LovelaceRowConfig[] = [];
   @state() private _currentConfigPage: ConfigPage = null;
 
-  public async setConfig(config: PowerFlowCardPlusConfig): Promise<void> {
+  public async setConfig(config: SkytechPowerFlowCardConfig): Promise<void> {
     assert(config, cardConfigStruct);
     this._config = config;
   }
@@ -272,6 +272,6 @@ export class PowerFlowCardPlusEditor extends LitElement implements LovelaceCardE
 
 declare global {
   interface HTMLElementTagNameMap {
-    "power-flow-card-plus-editor": PowerFlowCardPlusEditor;
+    "skytech-power-flow-card-editor": SkytechPowerFlowCardEditor;
   }
 }

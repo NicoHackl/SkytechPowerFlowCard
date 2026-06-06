@@ -3,7 +3,7 @@ import { HomeAssistant, fireEvent } from "custom-card-helpers";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit-element";
 import localize from "@/localize/localize";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { ConfigPage } from "../types/config-page";
 
 declare global {
@@ -15,7 +15,7 @@ declare global {
 @customElement("subpage-header")
 export class SubpageHeader extends LitElement {
   public hass!: HomeAssistant;
-  @property({ attribute: false }) public config!: PowerFlowCardPlusConfig;
+  @property({ attribute: false }) public config!: SkytechPowerFlowCardConfig;
   @property() protected page?: ConfigPage;
 
   protected render(): TemplateResult {

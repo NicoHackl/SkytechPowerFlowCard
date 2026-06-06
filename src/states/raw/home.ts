@@ -1,5 +1,5 @@
 import { HomeAssistant } from "custom-card-helpers";
 import { getSecondaryState } from "./base";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 
-export const getHomeSecondaryState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => getSecondaryState(hass, config, "home");
+export const getHomeSecondaryState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => getSecondaryState(hass, config, "home");

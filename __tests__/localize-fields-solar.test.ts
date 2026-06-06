@@ -3,7 +3,7 @@ import { describe, expect, test, beforeEach } from "@jest/globals";
 import setupCustomlocalize from "../src/localize/localize";
 import { computeFieldIcon, computeFieldName } from "../src/utils/compute-field-attributes";
 import { getSolarState } from "../src/states/raw/solar";
-import type { PowerFlowCardPlusConfig } from "../src/power-flow-card-plus-config";
+import type { SkytechPowerFlowCardConfig } from "../src/skytech-power-flow-card-config";
 
 describe("localize + field helpers + solar sign", () => {
   beforeEach(() => {
@@ -96,7 +96,7 @@ describe("localize + field helpers + solar sign", () => {
       entities: {
         solar: { entity: "sensor.solar_watts", invert_state: false },
       },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(getSolarState(hass, config)).toBe(0);
   });
@@ -117,7 +117,7 @@ describe("localize + field helpers + solar sign", () => {
       entities: {
         solar: { entity: "sensor.solar_watts", invert_state: true },
       },
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(getSolarState(hass, config)).toBe(500);
   });

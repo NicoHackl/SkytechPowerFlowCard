@@ -1,8 +1,8 @@
 import { html, nothing, svg } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { generalSecondarySpan } from "./spans/general-secondary-span";
 import { displayNonFossilState } from "@/utils/display-non-fossil-state";
-import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { ConfigEntities, SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { NewDur, TemplatesObj } from "@/type";
 import { styleLine } from "@/utils/style-line";
 import { computeIndividualFlowRate } from "@/utils/compute-flow-rate";
@@ -18,8 +18,8 @@ interface NonFossil {
 }
 
 export const nonFossilElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   { nonFossil, entities, templatesObj, grid, newDur }: NonFossil
 ) => {
   const disableEntityClick = config.clickable_entities === false;

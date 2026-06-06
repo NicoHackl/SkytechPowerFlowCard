@@ -21,7 +21,7 @@ const serveOptions = {
 
 export default [
   {
-    input: ["src/power-flow-card-plus.ts"],
+    input: ["src/skytech-power-flow-card.ts"],
     output: [
       {
         dir: "dist",
