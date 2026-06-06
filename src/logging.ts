@@ -7,5 +7,9 @@ console.log("Readme:", "https://github.com/NicoHackl/SkytechPowerFlowCard");
 console.groupEnd();
 
 export const logError = debounce((error: string) => {
-  console.log(`%c⚡ Skytech Power Flow Card v${version} %cError: ${error}`, "color: #488fc2; font-weight: bold", "color: #b33a3a; font-weight: normal");
+  console.log(
+    `%c⚡ Skytech Power Flow Card v${version} %cError: ${error}`,
+    "color: #488fc2; font-weight: bold",
+    "color: #b33a3a; font-weight: normal"
+  );
 }, 60000);

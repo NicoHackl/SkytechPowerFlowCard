@@ -7,7 +7,11 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const batteryToHomeDot = (config: SkytechPowerFlowCardConfig, battery: FlowBatteryToHomeFlows["battery"], newDur: FlowBatteryToHomeFlows["newDur"]) => {
+const batteryToHomeDot = (
+  config: SkytechPowerFlowCardConfig,
+  battery: FlowBatteryToHomeFlows["battery"],
+  newDur: FlowBatteryToHomeFlows["newDur"]
+) => {
   if (!checkShouldShowDots(config) || !battery.state.toHome) return nothing;
 
   return svg`<circle r="1" class="battery-home" vector-effect="non-scaling-stroke">
