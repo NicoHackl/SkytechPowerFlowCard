@@ -1,5 +1,5 @@
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
-import { ConfigEntities } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
+import { ConfigEntities } from "@/skytech-power-flow-card-config";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
 import { IndividualDeviceType } from "@/type";
 import { convertColorListToHex } from "@/utils/convert-color";
@@ -12,7 +12,7 @@ interface AllDynamicStyles {
 }
 
 export const allDynamicStyles = (
-  main: PowerFlowCardPlus,
+  main: SkytechPowerFlowCard,
   {
     grid,
     solar,

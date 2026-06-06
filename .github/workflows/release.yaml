@@ -52,7 +52,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.package_version.outputs.version }}
-          files: dist/power-flow-card-plus.js
+          files: dist/skytech-power-flow-card.js
           # Use the changelog from the latest tag
           generate_release_notes: true
         env:

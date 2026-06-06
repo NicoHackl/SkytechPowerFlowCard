@@ -1,8 +1,8 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { HomeAssistant } from "custom-card-helpers";
 
-export const dashboardLinkElement = (config: PowerFlowCardPlusConfig, hass: HomeAssistant) => {
+export const dashboardLinkElement = (config: SkytechPowerFlowCardConfig, hass: HomeAssistant) => {
   if (!config.dashboard_link && !config.second_dashboard_link) return nothing;
 
   return html`

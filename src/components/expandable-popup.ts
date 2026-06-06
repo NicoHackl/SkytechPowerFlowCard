@@ -1,6 +1,6 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { displayValue } from "@/utils/display-value";
 import { BreakdownRow } from "@/utils/sub-source-breakdown";
 
@@ -17,7 +17,7 @@ export type ExpandedGroup = {
  * field (solar, battery or a grouped consumer). Tapping a row opens the
  * more-info dialog for that entity.
  */
-export const expandablePopup = (main: PowerFlowCardPlus, config: PowerFlowCardPlusConfig, group: ExpandedGroup) => html`
+export const expandablePopup = (main: SkytechPowerFlowCard, config: SkytechPowerFlowCardConfig, group: ExpandedGroup) => html`
   <div class="pfcp-popup-backdrop" @click=${() => main.closeExpand()}>
     <div class="pfcp-popup" @click=${(e: MouseEvent) => e.stopPropagation()}>
       <div class="pfcp-popup-header">

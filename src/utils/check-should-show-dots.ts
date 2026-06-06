@@ -1,6 +1,6 @@
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 
-export const checkShouldShowDots = (config: PowerFlowCardPlusConfig) => {
+export const checkShouldShowDots = (config: SkytechPowerFlowCardConfig) => {
   if (config.disable_dots === true) {
     return false;
   }

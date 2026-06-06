@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { NewDur } from "@/type";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
 import { flowSolarToHome } from "./solar-to-home";
 import { flowSolarToGrid } from "./solar-to-grid";
@@ -17,7 +17,7 @@ export interface Flows {
   newDur: NewDur;
 }
 
-export const flowElement = (config: PowerFlowCardPlusConfig, { battery, grid, individual, solar, newDur }: Flows) => {
+export const flowElement = (config: SkytechPowerFlowCardConfig, { battery, grid, individual, solar, newDur }: Flows) => {
   return html`
   ${flowSolarToHome(config, { battery, grid, individual, solar, newDur })}
   ${flowSolarToGrid(config, { battery, grid, individual, solar, newDur })}

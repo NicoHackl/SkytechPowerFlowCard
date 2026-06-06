@@ -3,7 +3,7 @@ import { describe, expect, test } from "@jest/globals";
 import { adjustZeroTolerance } from "../src/states/tolerance/base";
 import { computeFlowRate, computeIndividualFlowRate } from "../src/utils/compute-flow-rate";
 import { displayValue } from "../src/utils/display-value";
-import type { PowerFlowCardPlusConfig } from "../src/power-flow-card-plus-config";
+import type { SkytechPowerFlowCardConfig } from "../src/skytech-power-flow-card-config";
 
 describe("core utils", () => {
   test("adjustZeroTolerance returns 0 for null/zero values", () => {
@@ -30,7 +30,7 @@ describe("core utils", () => {
       max_flow_rate: 10,
       min_flow_rate: 1,
       use_new_flow_rate_model: true,
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(computeFlowRate(config, 101, 0)).toBe(1);
   });
@@ -42,7 +42,7 @@ describe("core utils", () => {
       max_flow_rate: 10,
       min_flow_rate: 1,
       use_new_flow_rate_model: true,
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(computeFlowRate(config, 0, 0)).toBe(10);
     expect(computeFlowRate(config, 100, 0)).toBe(1);
@@ -56,7 +56,7 @@ describe("core utils", () => {
       max_flow_rate: 10,
       min_flow_rate: 1,
       use_new_flow_rate_model: false,
-    } as unknown as PowerFlowCardPlusConfig;
+    } as unknown as SkytechPowerFlowCardConfig;
 
     expect(computeFlowRate(config, 25, 100)).toBeCloseTo(7.75, 10);
   });
@@ -75,25 +75,25 @@ describe("core utils", () => {
 
   test("displayValue returns 0 for null", () => {
     const hass = { locale: "en" } as any;
-    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as PowerFlowCardPlusConfig;
+    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as SkytechPowerFlowCardConfig;
     expect(displayValue(hass, config, null, {})).toBe("0 W");
   });
 
   test("displayValue chooses kW when unit is missing and value >= watt_threshold", () => {
     const hass = { locale: "en" } as any;
-    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as PowerFlowCardPlusConfig;
+    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as SkytechPowerFlowCardConfig;
     expect(displayValue(hass, config, 1500, {})).toBe("1.5 kW");
   });
 
   test("displayValue uses W when unit is missing and value < watt_threshold", () => {
     const hass = { locale: "en" } as any;
-    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as PowerFlowCardPlusConfig;
+    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as SkytechPowerFlowCardConfig;
     expect(displayValue(hass, config, 500, {})).toBe("500 W");
   });
 
   test("displayValue respects accept_negative", () => {
     const hass = { locale: "en" } as any;
-    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as PowerFlowCardPlusConfig;
+    const config = { kw_decimals: 1, w_decimals: 0, watt_threshold: 1000 } as unknown as SkytechPowerFlowCardConfig;
     expect(displayValue(hass, config, -500, { accept_negative: false })).toBe("500 W");
     expect(displayValue(hass, config, -500, { accept_negative: true })).toBe("-500 W");
   });

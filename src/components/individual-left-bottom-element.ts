@@ -1,6 +1,6 @@
 import { html, nothing, svg } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
 import { NewDur, TemplatesObj } from "@/type";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
@@ -18,8 +18,8 @@ interface IndividualBottom {
 }
 
 export const individualLeftBottomElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   { individualObj, templatesObj, displayState, newDur }: IndividualBottom
 ) => {
   if (!individualObj) return html`<div class="spacer"></div>`;

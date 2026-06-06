@@ -5,7 +5,7 @@ import { EditSubElementEvent, LovelaceRowConfig, SubElementEditorConfig } from "
 import { individualDevicesSchema } from "../schema/_schema-all";
 import localize from "@/localize/localize";
 import { IndividualDeviceType } from "@/type";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import "./individual-row-editor";
 
 export interface GUIModeChangedEvent {
@@ -34,7 +34,7 @@ export function processEditorEntities(entities): IndividualDeviceType[] {
 @customElement("individual-devices-editor")
 export class IndividualDevicesEditor extends LitElement {
   public hass!: HomeAssistant;
-  @property({ attribute: false }) public config!: PowerFlowCardPlusConfig;
+  @property({ attribute: false }) public config!: SkytechPowerFlowCardConfig;
 
   @state() private _subElementEditorConfig?: SubElementEditorConfig;
 

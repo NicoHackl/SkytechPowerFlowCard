@@ -1,5 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { showLine } from "@/utils/show-line";
 import { html, svg, nothing } from "lit";
 import { styleLine } from "@/utils/style-line";
@@ -7,7 +7,7 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const batteryToHomeDot = (config: PowerFlowCardPlusConfig, battery: FlowBatteryToHomeFlows["battery"], newDur: FlowBatteryToHomeFlows["newDur"]) => {
+const batteryToHomeDot = (config: SkytechPowerFlowCardConfig, battery: FlowBatteryToHomeFlows["battery"], newDur: FlowBatteryToHomeFlows["newDur"]) => {
   if (!checkShouldShowDots(config) || !battery.state.toHome) return nothing;
 
   return svg`<circle r="1" class="battery-home" vector-effect="non-scaling-stroke">
@@ -19,7 +19,7 @@ const batteryToHomeDot = (config: PowerFlowCardPlusConfig, battery: FlowBatteryT
 
 type FlowBatteryToHomeFlows = Pick<Flows, Exclude<keyof Flows, "solar">>;
 
-export const flowBatteryToHome = (config: PowerFlowCardPlusConfig, { battery, grid, individual, newDur }: FlowBatteryToHomeFlows) => {
+export const flowBatteryToHome = (config: SkytechPowerFlowCardConfig, { battery, grid, individual, newDur }: FlowBatteryToHomeFlows) => {
   const shouldShow = battery.has && showLine(config, battery.state.toHome) && !config.entities.home?.hide;
   if (!shouldShow) return nothing;
 

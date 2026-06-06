@@ -1,6 +1,6 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
-import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
+import { ConfigEntities, SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { generalSecondarySpan } from "./spans/general-secondary-span";
 import { displayValue } from "@/utils/display-value";
 import { TemplatesObj } from "@/type";
@@ -9,8 +9,8 @@ import { isNumberValue } from "@/utils/utils";
 import { computeSubSourceRows } from "@/utils/sub-source-breakdown";
 
 export const solarElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   {
     entities,
     solar,

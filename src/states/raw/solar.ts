@@ -1,11 +1,11 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { isEntityInverted } from "@/states/utils/is-entity-inverted";
 import { getEntityStateWatts } from "@/states/utils/get-entity-state-watts";
 import { onlyNegative, onlyPositive } from "@/states/utils/negative-positive";
 import { getSecondaryState } from "./base";
 
-export const getSolarState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => {
+export const getSolarState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => {
   const entity = config.entities.solar?.entity;
   const secondaryEntity = config.entities.solar?.secondary_info?.entity;
 
@@ -22,4 +22,4 @@ export const getSolarState = (hass: HomeAssistant, config: PowerFlowCardPlusConf
   return onlyPositive(totalSolarState);
 };
 
-export const getSolarSecondaryState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => getSecondaryState(hass, config, "solar");
+export const getSolarSecondaryState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => getSecondaryState(hass, config, "solar");

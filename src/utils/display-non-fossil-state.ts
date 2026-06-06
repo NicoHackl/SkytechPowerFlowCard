@@ -1,5 +1,5 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { isEntityAvailable } from "@/states/utils/existence-entity";
 import { unavailableOrMisconfiguredError } from "@/utils/unavailable-error";
 import { getEntityState } from "@/states/utils/get-entity-state";
@@ -8,7 +8,7 @@ import { displayValue } from "@/utils/display-value";
 
 export const displayNonFossilState = (
   hass: HomeAssistant,
-  config: PowerFlowCardPlusConfig,
+  config: SkytechPowerFlowCardConfig,
   entityFossil: string,
   totalFromGrid: number
 ): string | number => {

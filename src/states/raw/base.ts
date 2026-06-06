@@ -1,5 +1,5 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { EntityType } from "@/type";
 import { isNumberValue } from "@/utils/utils";
 import { isEntityInverted } from "@/states/utils/is-entity-inverted";
@@ -7,7 +7,7 @@ import { onlyNegative, onlyPositive } from "@/states/utils/negative-positive";
 import { getEntityStateWatts } from "@/states/utils/get-entity-state-watts";
 import { getFirstEntityName } from "@/states/utils/mutli-entity";
 
-export const getSecondaryState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig, field: EntityType) => {
+export const getSecondaryState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig, field: EntityType) => {
   const entity = config.entities?.[field]?.secondary_info?.entity;
 
   if (typeof entity !== "string") return null;
@@ -20,7 +20,7 @@ export const getSecondaryState = (hass: HomeAssistant, config: PowerFlowCardPlus
   return secondaryState;
 };
 
-export const getFieldInState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig, field: EntityType) => {
+export const getFieldInState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig, field: EntityType) => {
   const entity = config.entities[field]?.entity;
 
   if (entity === undefined) return null;
@@ -35,7 +35,7 @@ export const getFieldInState = (hass: HomeAssistant, config: PowerFlowCardPlusCo
   return getEntityStateWatts(hass, entity!.production);
 };
 
-export const getFieldOutState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig, field: EntityType) => {
+export const getFieldOutState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig, field: EntityType) => {
   const entity = config.entities[field]?.entity;
 
   if (entity === undefined) return null;

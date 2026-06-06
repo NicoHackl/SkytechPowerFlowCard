@@ -1,10 +1,10 @@
 import { HomeAssistant } from "custom-card-helpers";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { getFieldInState, getFieldOutState } from "./base";
 import { getEntityState } from "@/states/utils/get-entity-state";
 import { getEntityNames } from "@/states/utils/mutli-entity";
 
-export const getBatteryStateOfCharge = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => {
+export const getBatteryStateOfCharge = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => {
   const entity = config.entities.battery?.state_of_charge;
 
   if (entity === undefined) return null;
@@ -26,6 +26,6 @@ export const getBatteryStateOfCharge = (hass: HomeAssistant, config: PowerFlowCa
   return count ? sum / count : null;
 };
 
-export const getBatteryInState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => getFieldInState(hass, config, "battery");
+export const getBatteryInState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => getFieldInState(hass, config, "battery");
 
-export const getBatteryOutState = (hass: HomeAssistant, config: PowerFlowCardPlusConfig) => getFieldOutState(hass, config, "battery");
+export const getBatteryOutState = (hass: HomeAssistant, config: SkytechPowerFlowCardConfig) => getFieldOutState(hass, config, "battery");

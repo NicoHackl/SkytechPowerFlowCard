@@ -1,19 +1,19 @@
 import { HomeAssistant } from "custom-card-helpers";
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { TemplatesObj } from "@/type";
 import { displayValue } from "@/utils/display-value";
 import { isNumberValue } from "@/utils/utils";
 import { baseSecondarySpan } from "./base-secondary-span";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 
 export type IndividualKey = `left-top` | `left-bottom` | `right-top` | `right-bottom`;
 
 export const individualSecondarySpan = (
   hass: HomeAssistant,
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   templatesObj: TemplatesObj,
   individual: IndividualObject,
   index: number,

@@ -1,5 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { showLine } from "@/utils/show-line";
 import { html, svg, nothing } from "lit";
 import { styleLine } from "@/utils/style-line";
@@ -7,7 +7,7 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const solarToGridDot = (config: PowerFlowCardPlusConfig, solar: Flows["solar"], newDur: Flows["newDur"]) => {
+const solarToGridDot = (config: SkytechPowerFlowCardConfig, solar: Flows["solar"], newDur: Flows["newDur"]) => {
   if (!checkShouldShowDots(config) || !solar.state.toGrid || !solar.has) return nothing;
 
   return svg`<circle r="1" class="return" vector-effect="non-scaling-stroke">
@@ -17,7 +17,7 @@ const solarToGridDot = (config: PowerFlowCardPlusConfig, solar: Flows["solar"], 
     </circle>`;
 };
 
-export const flowSolarToGrid = (config: PowerFlowCardPlusConfig, { battery, grid, individual, solar, newDur }: Flows) => {
+export const flowSolarToGrid = (config: SkytechPowerFlowCardConfig, { battery, grid, individual, solar, newDur }: Flows) => {
   const shouldShow = grid.hasReturnToGrid && solar.has && showLine(config, solar.state.toGrid || 0);
   if (!shouldShow) return nothing;
 

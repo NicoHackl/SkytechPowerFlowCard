@@ -1,5 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { showLine } from "@/utils/show-line";
 import { html, svg, nothing } from "lit";
 import { styleLine } from "@/utils/style-line";
@@ -7,7 +7,7 @@ import { type Flows } from "./index";
 import { checkHasBottomIndividual, checkHasRightIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 
-const solarToBatteryDot = (config: PowerFlowCardPlusConfig, solar: Flows["solar"], newDur: Flows["newDur"]) => {
+const solarToBatteryDot = (config: SkytechPowerFlowCardConfig, solar: Flows["solar"], newDur: Flows["newDur"]) => {
   if (!checkShouldShowDots(config) || !solar.state.toBattery) return nothing;
 
   return svg`<circle r="1" class="battery-solar" vector-effect="non-scaling-stroke">
@@ -19,7 +19,7 @@ const solarToBatteryDot = (config: PowerFlowCardPlusConfig, solar: Flows["solar"
 
 type FlowSolarToBatteryFlows = Pick<Flows, Exclude<keyof Flows, "grid">>;
 
-export const flowSolarToBattery = (config: PowerFlowCardPlusConfig, { battery, individual, solar, newDur }: FlowSolarToBatteryFlows) => {
+export const flowSolarToBattery = (config: SkytechPowerFlowCardConfig, { battery, individual, solar, newDur }: FlowSolarToBatteryFlows) => {
   const shouldShow = battery.has && solar.has && showLine(config, solar.state.toBattery || 0);
   if (!shouldShow) return nothing;
 

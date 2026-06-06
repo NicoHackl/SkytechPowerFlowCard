@@ -1,11 +1,11 @@
 import { html, nothing, svg } from "lit";
 import { individualSecondarySpan } from "./spans/individual-secondary-span";
 import { NewDur, TemplatesObj } from "@/type";
-import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
+import { SkytechPowerFlowCardConfig } from "@/skytech-power-flow-card-config";
 import { computeIndividualFlowRate } from "@/utils/compute-flow-rate";
 import { showLine } from "@/utils/show-line";
 import { IndividualObject } from "@/states/raw/individual/get-individual-object";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { styleLine } from "@/utils/style-line";
 import { checkHasBottomIndividual } from "@/utils/compute-individual-position";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
@@ -21,8 +21,8 @@ interface TopIndividual {
 }
 
 export const individualRightTopElement = (
-  main: PowerFlowCardPlus,
-  config: PowerFlowCardPlusConfig,
+  main: SkytechPowerFlowCard,
+  config: SkytechPowerFlowCardConfig,
   { individualObj, templatesObj, displayState, newDur, battery, individualObjs }: TopIndividual
 ) => {
   if (!individualObj) return html`<div class="spacer"></div>`;

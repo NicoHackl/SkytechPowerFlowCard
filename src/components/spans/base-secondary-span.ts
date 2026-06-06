@@ -1,9 +1,9 @@
 import { html, nothing } from "lit";
-import { PowerFlowCardPlus } from "@/power-flow-card-plus";
+import { SkytechPowerFlowCard } from "@/skytech-power-flow-card";
 import { ActionConfigSet, offlineStr } from "@/type";
 
 type BaseSecondarySpan = {
-  main: PowerFlowCardPlus;
+  main: SkytechPowerFlowCard;
   className: string;
   template?: string;
   value?: string;
