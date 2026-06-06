@@ -12,6 +12,7 @@ import { individualRightBottomElement } from "@/components/individual-right-bott
 import { individualRightTopElement } from "@/components/individual-right-top-element";
 import { dashboardLinkElement } from "@/components/misc/dashboard-link";
 import { nonFossilElement } from "@/components/non-fossil";
+import { expandablePopup, ExpandedGroup } from "@/components/expandable-popup";
 import { solarElement } from "@/components/solar";
 import { handleAction } from "@/ha/panels/lovelace/common/handle-action";
 import { PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
@@ -46,6 +47,7 @@ import { registerCustomCard } from "@/utils/register-custom-card";
 import { coerceNumber } from "@/utils/utils";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
 import { sortIndividualObjects } from "@/utils/sort-individual-objects";
+import { normalizeSubEntities } from "@/utils/normalize-sub-entities";
 
 const circleCircumference = 238.76104;
 
@@ -64,6 +66,7 @@ export class PowerFlowCardPlus extends LitElement {
   @state() private _templateResults: Partial<Record<string, RenderTemplateResult>> = {};
   @state() private _unsubRenderTemplates?: Map<string, Promise<UnsubscribeFunc>> = new Map();
   @state() private _width = 0;
+  @state() private _expandedGroup?: ExpandedGroup;
   private readonly wideEnoughForFourIndividuals = 359;
   private _resizeObserver?: ResizeObserver;
   private _handleVisibilityChange = () => {
@@ -106,6 +109,9 @@ export class PowerFlowCardPlus extends LitElement {
     if ((config.entities as any).individual1 || (config.entities as any).individual2) {
       throw new Error("You are using an outdated configuration. Please update your configuration to the latest version.");
     }
+    // Flatten the `entities` arrays on solar/battery/individual into the single
+    // entity shape the rest of the card expects (keeping the arrays for popups).
+    config = normalizeSubEntities(config);
     if (!config.entities || (!config.entities?.battery?.entity && !config.entities?.grid?.entity && !config.entities?.solar?.entity)) {
       throw new Error("At least one entity for battery, grid or solar must be defined");
     }
@@ -271,6 +277,31 @@ export class PowerFlowCardPlus extends LitElement {
     }
   }
 
+  /** Opens or closes the expandable popup for an aggregated group. */
+  public toggleExpand(group: ExpandedGroup): void {
+    this._expandedGroup = this._expandedGroup?.id === group.id ? undefined : group;
+  }
+
+  public closeExpand(): void {
+    this._expandedGroup = undefined;
+  }
+
+  public openMoreInfoForEntity(entityId?: string): void {
+    if (!entityId) return;
+    this.dispatchEvent(new CustomEvent("hass-more-info", { composed: true, detail: { entityId } }));
+  }
+
+  /** Click handler for an aggregated circle: toggles its popup (respecting hold). */
+  public onGroupClick(event: MouseEvent, group: ExpandedGroup): void {
+    event.stopPropagation();
+    const target = event.currentTarget as HTMLElement | null;
+    if (target && this._holdTriggered.get(target)) {
+      this._holdTriggered.set(target, false);
+      return;
+    }
+    this.toggleExpand(group);
+  }
+
   protected render(): TemplateResult | typeof nothing {
     if (!this._config || !this.hass) {
       return nothing;
@@ -413,7 +444,7 @@ export class PowerFlowCardPlus extends LitElement {
             solar,
           })}
         </div>
-        ${dashboardLinkElement(this._config, this.hass)}
+        ${dashboardLinkElement(this._config, this.hass)} ${this._expandedGroup ? expandablePopup(this, this._config, this._expandedGroup) : nothing}
       </ha-card>
     `;
   }
@@ -521,6 +552,8 @@ export class PowerFlowCardPlus extends LitElement {
     const solar = {
       entity: entities.solar?.entity as string | undefined,
       has: hasSolarEntity && displayZero,
+      expandable: !!entities.solar?.entities?.length && entities.solar?.expandable !== false,
+      subSources: entities.solar?.entities ?? [],
       state: {
         total: getSolarState(this.hass, this._config),
         toHome: initialNumericState,
@@ -555,6 +588,8 @@ export class PowerFlowCardPlus extends LitElement {
     const battery = {
       entity: entities.battery?.entity,
       has: checkIfHasBattery(),
+      expandable: !!entities.battery?.entities?.length && entities.battery?.expandable !== false,
+      subSources: entities.battery?.entities ?? [],
       mainEntity: typeof entities.battery?.entity === "object" ? entities.battery.entity.consumption : entities.battery?.entity,
       name: computeFieldName(this.hass, entities.battery, this.hass.localize("ui.panel.lovelace.cards.energy.energy_distribution.battery")),
       icon: computeFieldIcon(this.hass, entities.battery, "mdi:battery-high"),

@@ -1,16 +1,24 @@
 import { HomeAssistant } from "custom-card-helpers";
 import { getEntityState } from "./get-entity-state";
-import { getFirstEntityName } from "./mutli-entity";
+import { getEntityNames } from "./mutli-entity";
 
 const prefixes = ["K", "M", "G", "T", "P", "E", "Z", "Y"];
 
 export const getEntityStateWatts = (hass: HomeAssistant, entity: string | undefined): number => {
-  const state = getEntityState(hass, entity);
-  if (!entity || state === null) return 0;
+  if (!entity) return 0;
 
-  const unit = hass.states[getFirstEntityName(entity)].attributes.unit_of_measurement ?? "";
+  // Multi-entity strings ("sensor.a | sensor.b") are summed up. Each entity is
+  // converted to watts using its own unit, so sub-sources may mix W/kW.
+  const ids = getEntityNames(entity);
+  let total = 0;
+  for (const id of ids) {
+    const state = getEntityState(hass, id);
+    if (state === null) continue;
+    const unit = hass.states[id]?.attributes.unit_of_measurement ?? "";
+    total = total + convertUnitToWatts(state, unit);
+  }
 
-  return convertUnitToWatts(state, unit);
+  return total;
 };
 
 const convertUnitToWatts = (value: number, unit: string): number => {

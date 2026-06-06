@@ -1,4 +1,12 @@
-import { BaseConfigEntity, ComboEntity, GridPowerOutage, IndividualDeviceType, SecondaryInfoType, type LovelaceCardConfig } from "./type.js";
+import {
+  BaseConfigEntity,
+  ComboEntity,
+  GridPowerOutage,
+  IndividualDeviceType,
+  SecondaryInfoType,
+  SubSource,
+  type LovelaceCardConfig,
+} from "./type.js";
 
 export type DisplayZeroLinesMode = "show" | "grey_out" | "transparency" | "hide" | "custom";
 
@@ -46,6 +54,13 @@ interface Battery extends BaseConfigEntity {
   color_circle: "color_dynamically" | "production" | "consumption";
   color_value?: boolean;
   color?: ComboEntity;
+  /**
+   * Multiple battery/storage sub-sources. They are summed into a single battery
+   * circle; clicking it opens a popup with each battery (and its state of charge).
+   */
+  entities?: SubSource[];
+  /** Defaults to true when `entities` is set. Set false to disable the popup. */
+  expandable?: boolean;
 }
 
 interface Grid extends BaseConfigEntity {
@@ -67,6 +82,13 @@ interface Solar extends BaseConfigEntity {
   };
   display_zero?: boolean;
   display_zero_state?: boolean;
+  /**
+   * Multiple solar sub-sources (e.g. several strings/inverters). They are summed
+   * into a single solar circle; clicking it opens a popup with each source.
+   */
+  entities?: SubSource[];
+  /** Defaults to true when `entities` is set. Set false to disable the popup. */
+  expandable?: boolean;
 }
 
 interface Home extends BaseConfigEntity {

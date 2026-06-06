@@ -12,6 +12,22 @@ export type ComboEntity = {
   production: string;
 };
 
+/**
+ * A single sub-source of an aggregated/expandable field (solar, battery or an
+ * individual consumer group). Multiple sub-sources are summed up into the parent
+ * field and can be displayed individually in an expandable popup.
+ */
+export type SubSource = {
+  entity: string | ComboEntity;
+  name?: string;
+  icon?: string;
+  color?: string | ComboEntity;
+  /** Only relevant for battery sub-sources: the state of charge sensor. */
+  state_of_charge?: string;
+  unit_of_measurement?: string;
+  invert_state?: boolean;
+} & ActionConfigSet;
+
 export type SecondaryInfoType = {
   entity?: string;
   unit_of_measurement?: string;
@@ -61,6 +77,14 @@ export type IndividualDeviceType = BaseConfigEntity & {
   use_metadata?: boolean;
   decimals?: number;
   show_direction?: boolean;
+  /**
+   * Child consumers of this device. When set, this device acts as a group:
+   * its state is the sum of its children and clicking it opens an expandable
+   * popup listing each child (e.g. "Wallbox" -> "Wallbox 1", "Wallbox 2").
+   */
+  entities?: SubSource[];
+  /** Defaults to true when `entities` is set. Set false to disable the popup. */
+  expandable?: boolean;
 };
 
 export type EntityType = "battery" | "grid" | "solar" | "individual1" | "individual2" | "home" | "fossil_fuel_percentage";

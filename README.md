@@ -272,6 +272,88 @@ Can be use with either Grid or Battery configuration. The same `unit_of_measurem
 | consumption | `string` | Entity ID providing a state value for consumption, this is required if using a split grid object. |
 | production  | `string` | Entity ID providing a state value for production                                                  |
 
+#### Multiple Sources & Expandable Groups
+
+You can aggregate **multiple solar sources**, **multiple batteries/storages** and group **multiple consumers** behind a single circle. The values are summed up into one circle, and clicking the circle opens a small popup that lists each underlying source individually. Tapping a row in the popup opens the more-info dialog of that entity.
+
+This is configured with an `entities` array on the `solar`, `battery` or an `individual` device. Each entry is a **sub-source**:
+
+| Name                | Type                 | Description                                                                                                  |
+| ------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| entity              | `string` or `object` | Entity ID of the sub-source. For batteries this may also be a [split entity](#split-entities) object.        |
+| name                | `string`             | Label shown in the popup. Defaults to the entity's friendly name.                                            |
+| icon                | `string`             | Icon shown in the popup. Defaults to the parent's icon (solar/battery/individual).                           |
+| color               | `string`             | Optional HEX color for the row's icon in the popup.                                                          |
+| state_of_charge     | `string`             | (Battery only) State of charge sensor for this battery. Shown next to the power in the popup.                |
+| unit_of_measurement | `string`             | Optional unit override for the displayed value.                                                              |
+| invert_state        | `boolean`            | If `true`, the sub-source's value is inverted before summing.                                                |
+
+On the parent (`solar` / `battery` / individual device) you can additionally set:
+
+| Name       | Type      | Default | Description                                                                                  |
+| ---------- | --------- | ------- | -------------------------------------------------------------------------------------------- |
+| entities   | `array`   |         | The list of sub-sources described above.                                                     |
+| expandable | `boolean` | `true`  | Set to `false` to disable the popup (the circle still shows the aggregated sum).             |
+
+> [!NOTE]
+> Notes:
+> - If you set `entities` and leave `entity` empty, the card automatically builds the combined (summed) entity for you. Setting `entity` explicitly always wins.
+> - For multiple batteries the aggregated **state of charge** is the **average** of all configured `state_of_charge` sensors.
+> - Sub-sources are currently configured via **YAML**. The visual editor exposes the `expandable` toggle but not the nested `entities` list yet.
+
+##### Example: multiple solar sources
+
+```yaml
+type: custom:power-flow-card-plus
+entities:
+  solar:
+    name: Solar
+    entities:
+      - entity: sensor.solar_east
+        name: East Roof
+      - entity: sensor.solar_west
+        name: West Roof
+      - entity: sensor.solar_garage
+        name: Garage
+  grid:
+    entity: sensor.grid_power
+```
+
+##### Example: multiple batteries / storages
+
+```yaml
+type: custom:power-flow-card-plus
+entities:
+  battery:
+    name: Storage
+    entities:
+      - entity: sensor.battery_1_power
+        name: Battery 1
+        state_of_charge: sensor.battery_1_soc
+      - entity: sensor.battery_2_power
+        name: Battery 2
+        state_of_charge: sensor.battery_2_soc
+  grid:
+    entity: sensor.grid_power
+```
+
+##### Example: grouped consumer (Wallbox -> Wallbox 1 & 2)
+
+```yaml
+type: custom:power-flow-card-plus
+entities:
+  grid:
+    entity: sensor.grid_power
+  individual:
+    - name: Wallbox
+      icon: mdi:ev-station
+      entities:
+        - entity: sensor.wallbox_1_power
+          name: Wallbox 1
+        - entity: sensor.wallbox_2_power
+          name: Wallbox 2
+```
+
 #### Secondary Info Configuration
 
 This Feature allows you to configure an additional small text for each Individual Device. Here you can put , for example, the state of charge of an electric car.
@@ -517,7 +599,7 @@ Here is my to-do list containing a few enhancements I am planning in adding. The
 - [x] Change Tap Action Behavior to be compatible with Browser Mod
 - Fill the circles [#89](https://github.com/flixlix/power-flow-card-plus/issues/89)
 - [x] More than two Individual Devices [#54](https://github.com/flixlix/power-flow-card-plus/issues/54)
-- More than one solar source [#23](https://github.com/flixlix/power-flow-card-plus/issues/23)
+- [x] More than one solar source [#23](https://github.com/flixlix/power-flow-card-plus/issues/23) (via [Multiple Sources & Expandable Groups](#multiple-sources--expandable-groups))
 - Display Connected/Disconnected status [#111](https://github.com/flixlix/power-flow-card-plus/issues/111)
 - Grid Feed In Circle [#119](https://github.com/flixlix/power-flow-card-plus/issues/119)
 - Improve performance [#144](https://github.com/flixlix/power-flow-card-plus/issues/144)

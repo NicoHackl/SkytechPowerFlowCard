@@ -8,6 +8,7 @@ import { IndividualObject } from "@/states/raw/individual/get-individual-object"
 import { PowerFlowCardPlus } from "@/power-flow-card-plus";
 import { styleLine } from "@/utils/style-line";
 import { checkShouldShowDots } from "@/utils/check-should-show-dots";
+import { computeSubSourceRows } from "@/utils/sub-source-breakdown";
 
 interface TopIndividual {
   newDur: NewDur;
@@ -28,12 +29,20 @@ export const individualRightBottomElement = (
   if (indexOfIndividual === -1 || indexOfIndividual === undefined) return html`<div class="spacer"></div>`;
 
   const duration = newDur.individual[indexOfIndividual] || 1.66;
+  const isExpandable = !!individualObj?.field?.entities?.length && individualObj?.field?.expandable !== false;
+  const expandGroup = () => ({
+    id: `individual:${individualObj.entity}`,
+    title: individualObj.name,
+    kind: "individual" as const,
+    rows: computeSubSourceRows(main.hass, "individual", individualObj.field!.entities!, individualObj.icon),
+  });
 
   return html`<div class="circle-container individual-bottom individual-right individual-right-bottom">
     <div
-      class="circle ${disableEntityClick ? "pointer-events-none" : ""}"
+      class="circle ${disableEntityClick ? "pointer-events-none" : ""} ${isExpandable ? "expandable" : ""}"
       @click=${(e: MouseEvent) => {
-        main.onEntityClick(e, individualObj?.field, individualObj?.entity);
+        if (isExpandable) main.onGroupClick(e, expandGroup());
+        else main.onEntityClick(e, individualObj?.field, individualObj?.entity);
       }}
       @dblclick=${(e: MouseEvent) => {
         main.onEntityDoubleClick(e, individualObj?.field, individualObj?.entity);
@@ -56,6 +65,7 @@ export const individualRightBottomElement = (
       <ha-ripple .disabled=${disableEntityClick}></ha-ripple>
       ${individualSecondarySpan(main.hass, main, config, templatesObj, individualObj, indexOfIndividual, "right-bottom")}
       ${individualObj.icon !== " " ? html` <ha-icon id="individual-right-bottom-icon" .icon=${individualObj.icon}></ha-icon>` : nothing}
+      ${isExpandable ? html`<ha-icon class="pfcp-group-badge" .icon=${"mdi:chevron-down"}></ha-icon>` : nothing}
       ${individualObj?.field?.display_zero_state !== false || (individualObj.state || 0) > (individualObj.displayZeroTolerance ?? 0)
         ? html` <span class="individual-bottom individual-right-bottom">
             ${individualObj?.showDirection

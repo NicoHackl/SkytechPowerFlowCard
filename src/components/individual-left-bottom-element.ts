@@ -8,6 +8,7 @@ import { computeIndividualFlowRate } from "@/utils/compute-flow-rate";
 import { showLine } from "@/utils/show-line";
 import { styleLine } from "@/utils/style-line";
 import { individualSecondarySpan } from "./spans/individual-secondary-span";
+import { computeSubSourceRows } from "@/utils/sub-source-breakdown";
 
 interface IndividualBottom {
   newDur: NewDur;
@@ -25,6 +26,13 @@ export const individualLeftBottomElement = (
   const disableEntityClick = config.clickable_entities === false;
   const indexOfIndividual = config?.entities?.individual?.findIndex((e) => e.entity === individualObj.entity) || 0;
   const duration = newDur.individual[indexOfIndividual] || 0;
+  const isExpandable = !!individualObj?.field?.entities?.length && individualObj?.field?.expandable !== false;
+  const expandGroup = () => ({
+    id: `individual:${individualObj.entity}`,
+    title: individualObj.name,
+    kind: "individual" as const,
+    rows: computeSubSourceRows(main.hass, "individual", individualObj.field!.entities!, individualObj.icon),
+  });
   return html`<div class="circle-container individual-bottom bottom">
     ${showLine(config, individualObj?.state || 0) && !config.entities.home?.hide
       ? html`
@@ -47,9 +55,10 @@ export const individualLeftBottomElement = (
         `
       : html` <svg width="80" height="30"></svg> `}
     <div
-      class="circle ${disableEntityClick ? "pointer-events-none" : ""}"
+      class="circle ${disableEntityClick ? "pointer-events-none" : ""} ${isExpandable ? "expandable" : ""}"
       @click=${(e: MouseEvent) => {
-        main.onEntityClick(e, individualObj?.field, individualObj?.entity);
+        if (isExpandable) main.onGroupClick(e, expandGroup());
+        else main.onEntityClick(e, individualObj?.field, individualObj?.entity);
       }}
       @dblclick=${(e: MouseEvent) => {
         main.onEntityDoubleClick(e, individualObj?.field, individualObj?.entity);
@@ -72,6 +81,7 @@ export const individualLeftBottomElement = (
       <ha-ripple .disabled=${disableEntityClick}></ha-ripple>
       ${individualSecondarySpan(main.hass, main, config, templatesObj, individualObj, indexOfIndividual, "left-bottom")}
       ${individualObj?.icon !== " " ? html` <ha-icon id="individual-left-bottom-icon" .icon=${individualObj?.icon}></ha-icon>` : nothing}
+      ${isExpandable ? html`<ha-icon class="pfcp-group-badge" .icon=${"mdi:chevron-down"}></ha-icon>` : nothing}
       ${individualObj?.field?.display_zero_state !== false || (individualObj?.state || 0) > (individualObj.displayZeroTolerance ?? 0)
         ? html` <span class="individual-bottom individual-left-bottom"
             >${individualObj?.showDirection

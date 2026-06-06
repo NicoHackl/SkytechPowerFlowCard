@@ -28,6 +28,12 @@ const mainSchema = {
       label: "Use Metadata",
       selector: { boolean: {} },
     },
+    {
+      name: "expandable",
+      label: "Expandable (multiple batteries, configure via YAML)",
+      default: true,
+      selector: { boolean: {} },
+    },
   ],
 };
 

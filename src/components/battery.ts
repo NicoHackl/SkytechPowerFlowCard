@@ -2,6 +2,7 @@ import { html, nothing } from "lit";
 import { PowerFlowCardPlus } from "@/power-flow-card-plus";
 import { ConfigEntities, PowerFlowCardPlusConfig } from "@/power-flow-card-plus-config";
 import { displayValue } from "@/utils/display-value";
+import { computeSubSourceRows } from "@/utils/sub-source-breakdown";
 
 export const batteryElement = (
   main: PowerFlowCardPlus,
@@ -15,10 +16,21 @@ export const batteryElement = (
   }
 ) => {
   const disableEntityClick = config.clickable_entities === false;
+  const isExpandable = !!battery.expandable;
+  const expandGroup = () => ({
+    id: "battery",
+    title: battery.name,
+    kind: "battery" as const,
+    rows: computeSubSourceRows(main.hass, "battery", battery.subSources, "mdi:battery-high"),
+  });
   return html`<div class="circle-container battery">
     <div
-      class="circle ${disableEntityClick ? "pointer-events-none" : ""}"
+      class="circle ${disableEntityClick ? "pointer-events-none" : ""} ${isExpandable ? "expandable" : ""}"
       @click=${(e: MouseEvent) => {
+        if (isExpandable) {
+          main.onGroupClick(e, expandGroup());
+          return;
+        }
         const target = entities.battery?.state_of_charge!
           ? entities.battery?.state_of_charge!
           : typeof entities.battery?.entity === "string"
@@ -60,6 +72,7 @@ export const batteryElement = (
       }}
     >
       <ha-ripple .disabled=${disableEntityClick}></ha-ripple>
+      ${isExpandable ? html`<ha-icon class="pfcp-group-badge" .icon=${"mdi:chevron-down"}></ha-icon>` : nothing}
       ${battery.state_of_charge.state !== null && entities.battery?.show_state_of_charge !== false
         ? html` <span
             @click=${(e: MouseEvent) => {

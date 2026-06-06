@@ -70,6 +70,12 @@ const mainSchema = {
       label: "Use Metadata",
       selector: { boolean: {} },
     },
+    {
+      name: "expandable",
+      label: "Expandable (sub-devices, configure via YAML)",
+      default: true,
+      selector: { boolean: {} },
+    },
   ],
 };
 

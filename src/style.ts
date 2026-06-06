@@ -601,4 +601,87 @@ export const styles = css`
   .pointer-events-none {
     pointer-events: none;
   }
+
+  /* Expandable group (multiple solar/battery sources or grouped consumers) */
+  .circle.expandable {
+    cursor: var(--clickable-cursor);
+  }
+
+  .pfcp-group-badge {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    --mdc-icon-size: 14px;
+    color: var(--secondary-text-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .pfcp-popup-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .pfcp-popup {
+    background: var(--card-background-color, var(--ha-card-background, #fff));
+    color: var(--primary-text-color);
+    border-radius: var(--ha-card-border-radius, 12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    min-width: 220px;
+    max-width: 90%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 8px 0;
+  }
+
+  .pfcp-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 16px 8px 16px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+  }
+
+  .pfcp-popup-close {
+    cursor: pointer;
+    color: var(--secondary-text-color);
+    --mdc-icon-size: 20px;
+  }
+
+  .pfcp-popup-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    cursor: var(--clickable-cursor);
+  }
+
+  .pfcp-popup-row:hover {
+    background: var(--secondary-background-color, rgba(0, 0, 0, 0.06));
+  }
+
+  .pfcp-popup-row-icon {
+    --mdc-icon-size: 22px;
+    color: var(--secondary-text-color);
+  }
+
+  .pfcp-popup-row-name {
+    flex: 1;
+  }
+
+  .pfcp-popup-row-state {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .pfcp-popup-row-soc {
+    color: var(--secondary-text-color);
+    margin-left: 6px;
+  }
 `;
